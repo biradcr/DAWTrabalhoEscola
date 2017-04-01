@@ -11,8 +11,8 @@ import java.util.GregorianCalendar;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import junit.framework.Assert;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,9 +47,10 @@ public class TestePersistirAluno {
         boolean exception = false;
         try {
             Aluno i = new Aluno();
-            i.setNome("Marcia Toledp");
+            i.setNome("Marcia Toledo");
             i.setEmail("marcia.toledo@gmail");
-            i.setNascimento(new GregorianCalendar(1992, 12, 11));        
+            i.setNascimento(new GregorianCalendar(1992, 12, 11));
+            
             em.getTransaction().begin();
             em.persist(i);
             em.getTransaction().commit();

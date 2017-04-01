@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,6 +28,7 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 @Entity
 @Table(name = "aluno")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Aluno implements Serializable{
     @Id
     @SequenceGenerator(name = "seq_aluno", sequenceName = "seq_aluno_id", allocationSize = 1)
@@ -44,6 +47,10 @@ public class Aluno implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "nascimento", nullable = false)
     private Calendar nascimento;
+    
+    public Aluno(){
+        
+    }
 
     public Integer getId() {
         return id;

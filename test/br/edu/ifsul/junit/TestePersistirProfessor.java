@@ -7,11 +7,12 @@ package br.edu.ifsul.junit;
 
 
 import br.edu.ifsul.modelo.Professor;
+import java.util.GregorianCalendar;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import junit.framework.Assert;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,11 +46,14 @@ public class TestePersistirProfessor {
     public void teste() {
         boolean exception = false;
         try {
-            Professor i = new Professor();
-            i.setTitulacao("Mestrado");          
-            i.setTopicosInteresse("");          
+            Professor p = new Professor();
+            p.setTitulacao("Doutorado");
+            p.setNome("Marcelo Borges");
+            p.setEmail("marcelo.borges@hotmail.com");
+            p.setNascimento(new GregorianCalendar(1981, 10, 16));
+            
             em.getTransaction().begin();
-            em.persist(i);
+            em.persist(p);
             em.getTransaction().commit();
         } catch (Exception e) {
             exception = true;

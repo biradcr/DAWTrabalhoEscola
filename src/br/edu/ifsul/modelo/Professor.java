@@ -8,12 +8,8 @@ package br.edu.ifsul.modelo;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
@@ -25,14 +21,18 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "professor")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Professor implements Serializable{
-    @Id
+public class Professor extends Aluno implements Serializable{
+   
     @NotNull(message = "A titulação deve ser informado")
     @NotBlank(message = "A titulação não pode ser em branco")
     @Column(name = "titulacao", nullable = false, length = 50)
     private String titulacao;
     @Column(name = "topicos_interesse", columnDefinition = "text")
     private String topicosInteresse;
+    
+    public Professor(){
+        
+    }
 
     public String getTitulacao() {
         return titulacao;
@@ -48,11 +48,6 @@ public class Professor implements Serializable{
 
     public void setTopicosInteresse(String topicosInteresse) {
         this.topicosInteresse = topicosInteresse;
-    }
-    
-
-    
-
-   
+    }   
     
 }
