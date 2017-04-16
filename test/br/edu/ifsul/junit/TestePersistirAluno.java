@@ -8,6 +8,7 @@ package br.edu.ifsul.junit;
 
 import br.edu.ifsul.modelo.Aluno;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -33,7 +34,7 @@ public class TestePersistirAluno {
 
     @Before
     public void setUp() {
-        emf = Persistence.createEntityManagerFactory("DAW_Escola");
+        emf = Persistence.createEntityManagerFactory("DAW_EscolaPU");
         em = emf.createEntityManager();
     }
     
@@ -41,19 +42,19 @@ public class TestePersistirAluno {
     public void tearDown() {
         em.close();
         emf.close();
-    } 
-    @Test
+    }  
+   @Test
     public void teste() {
         boolean exception = false;
         try {
-            Aluno i = new Aluno();
-            i.setNome("Marcia Toledo");
-            i.setEmail("marcia.toledo@gmail");
-            i.setNascimento(new GregorianCalendar(1992, 12, 11));
-            
-            em.getTransaction().begin();
-            em.persist(i);
-            em.getTransaction().commit();
+//            Aluno i = new Aluno();
+//            i.setNome("Marcia Tol");
+//            i.setEmail("marcia.toledo@gmail");
+//            i.setNascimento(new GregorianCalendar(1992, 12, 11));
+            List<Aluno> list = em.createQuery("from Aluno order by nome").getResultList();
+//            em.getTransaction().begin();
+//            em.persist(i);
+//            em.getTransaction().commit();
         } catch (Exception e) {
             exception = true;
             e.printStackTrace();

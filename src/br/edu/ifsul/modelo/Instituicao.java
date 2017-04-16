@@ -35,7 +35,7 @@ public class Instituicao implements Serializable{
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
     @NotNull(message = "O ano deve ser informado")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "ano_fundacao", nullable = false)
     private Calendar anoFundacao;
 

@@ -78,5 +78,26 @@ public class Nota implements Serializable{
     public void setMedia(Double media) {
         this.media = media;
     }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
+    
+    public void calcularMedia(){
+        media = (nota01+nota02)/2;
+    }
+    
     
 }

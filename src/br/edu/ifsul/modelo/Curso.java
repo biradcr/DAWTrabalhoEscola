@@ -7,6 +7,7 @@ package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -50,6 +53,10 @@ public class Curso implements Serializable{
     @Temporal(TemporalType.DATE)
     @Column(name = "inicio_atividade", nullable = false)
     private Calendar inicioAtividades;
+    @NotNull(message = "A cidade não pode ser nulo")
+    @ManyToOne
+    @JoinColumn(name = "instituicao", referencedColumnName = "id", nullable = false)
+    private Instituicao instituicao;
     
     
     public Curso(){
@@ -102,6 +109,39 @@ public class Curso implements Serializable{
 
     public void setInicioAtividades(Calendar inicioAtividades) {
         this.inicioAtividades = inicioAtividades;
+    }
+
+    public Instituicao getInstituicao() {
+        return instituicao;
+    }
+
+    public void setInstituicao(Instituicao instituicao) {
+        this.instituicao = instituicao;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Curso other = (Curso) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
     
     

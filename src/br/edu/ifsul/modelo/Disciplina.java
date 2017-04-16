@@ -7,6 +7,7 @@ package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -44,6 +47,10 @@ public class Disciplina implements Serializable{
     private Double cargaHoraria;
     @Column(name = "conhecimento_minimo", columnDefinition = "text")
     private String conhecimentosMinimos;
+    @ManyToOne
+    @JoinColumn(name = "curso", referencedColumnName = "id", nullable = false)
+    private Curso curso;
+    
     
     
     public Disciplina(){
@@ -88,6 +95,39 @@ public class Disciplina implements Serializable{
 
     public void setConhecimentosMinimos(String conhecimentosMinimos) {
         this.conhecimentosMinimos = conhecimentosMinimos;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Disciplina other = (Disciplina) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
    

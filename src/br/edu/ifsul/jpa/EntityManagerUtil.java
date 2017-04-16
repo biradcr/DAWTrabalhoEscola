@@ -19,7 +19,7 @@ public class EntityManagerUtil {
     
     public static EntityManager getEntityManager(){
         if(factory == null){
-            factory = Persistence.createEntityManagerFactory("DAW_Escola");
+            factory = Persistence.createEntityManagerFactory("DAW_EscolaPU");
         }
         if(em == null){
             em = factory.createEntityManager();

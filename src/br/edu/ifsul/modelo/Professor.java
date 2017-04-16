@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,7 +22,6 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 @Entity
 @Table(name = "professor")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Professor extends Aluno implements Serializable{
    
     @NotNull(message = "A titulação deve ser informado")
@@ -29,6 +30,10 @@ public class Professor extends Aluno implements Serializable{
     private String titulacao;
     @Column(name = "topicos_interesse", columnDefinition = "text")
     private String topicosInteresse;
+    
+    @ManyToOne
+    @JoinColumn(name = "especialidade", referencedColumnName = "id", nullable = false)
+    private Especialidade especialidade;
     
     public Professor(){
         
@@ -49,5 +54,14 @@ public class Professor extends Aluno implements Serializable{
     public void setTopicosInteresse(String topicosInteresse) {
         this.topicosInteresse = topicosInteresse;
     }   
+
+    public Especialidade getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(Especialidade especialidade) {
+        this.especialidade = especialidade;
+    }
+    
     
 }
