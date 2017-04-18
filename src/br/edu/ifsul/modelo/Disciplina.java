@@ -6,7 +6,9 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,7 +52,7 @@ public class Disciplina implements Serializable{
     @ManyToOne
     @JoinColumn(name = "curso", referencedColumnName = "id", nullable = false)
     private Curso curso;
-    
+    private List<Nota> nota = new ArrayList<>();
     
     
     public Disciplina(){
@@ -128,6 +130,14 @@ public class Disciplina implements Serializable{
             return false;
         }
         return true;
+    }
+
+    public List<Nota> getNota() {
+        return nota;
+    }
+
+    public void setNota(List<Nota> nota) {
+        this.nota = nota;
     }
 
    

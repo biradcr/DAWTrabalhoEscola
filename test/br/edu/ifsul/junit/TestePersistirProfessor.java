@@ -6,6 +6,7 @@
 package br.edu.ifsul.junit;
 
 
+import br.edu.ifsul.modelo.Especialidade;
 import br.edu.ifsul.modelo.Professor;
 import java.util.GregorianCalendar;
 import javax.persistence.EntityManager;
@@ -19,7 +20,7 @@ import org.junit.Test;
 
 /**
  *
- * @author jorge
+ * @author Ubiratan
  */
 public class TestePersistirProfessor {
 
@@ -33,7 +34,7 @@ public class TestePersistirProfessor {
 
     @Before
     public void setUp() {
-        emf = Persistence.createEntityManagerFactory("DAW_Escola");
+        emf = Persistence.createEntityManagerFactory("DAW_EscolaPU");
         em = emf.createEntityManager();
     }
     
@@ -48,9 +49,11 @@ public class TestePersistirProfessor {
         try {
             Professor p = new Professor();
             p.setTitulacao("Doutorado");
+            p.setEspecialidade(em.find(Especialidade.class, 4));
             p.setNome("Marcelo Borges");
             p.setEmail("marcelo.borges@hotmail.com");
             p.setNascimento(new GregorianCalendar(1981, 10, 16));
+            p.setTopicosInteresse("Nada");
             
             em.getTransaction().begin();
             em.persist(p);

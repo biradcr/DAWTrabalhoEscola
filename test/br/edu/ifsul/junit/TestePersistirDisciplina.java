@@ -32,7 +32,7 @@ public class TestePersistirDisciplina {
 
     @Before
     public void setUp() {
-        emf = Persistence.createEntityManagerFactory("DAW_Escola");
+        emf = Persistence.createEntityManagerFactory("DAW_EscolaPU");
         em = emf.createEntityManager();
     }
     

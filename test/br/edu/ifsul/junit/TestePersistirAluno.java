@@ -20,7 +20,7 @@ import org.junit.Test;
 
 /**
  *
- * @author jorge
+ * @author Ubiratan
  */
 public class TestePersistirAluno {
 

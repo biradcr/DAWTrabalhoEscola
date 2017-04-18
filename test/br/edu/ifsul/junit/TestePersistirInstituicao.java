@@ -19,7 +19,7 @@ import org.junit.Test;
 
 /**
  *
- * @author jorge
+ * @author Ubiratan
  */
 public class TestePersistirInstituicao {
 
@@ -33,7 +33,7 @@ public class TestePersistirInstituicao {
 
     @Before
     public void setUp() {
-        emf = Persistence.createEntityManagerFactory("DAW_Escola");
+        emf = Persistence.createEntityManagerFactory("DAW_EscolaPU");
         em = emf.createEntityManager();
     }
     
@@ -48,7 +48,7 @@ public class TestePersistirInstituicao {
         try {
             Instituicao i = new Instituicao();
             i.setAnoFundacao(new GregorianCalendar(2016, 10, 05));
-            i.setNome("Ifsul Passo Fundo");
+            i.setNome("Americanas");
            //v.setData(new GregorianCalendar(2016, 15, 45));            
             em.getTransaction().begin();
             em.persist(i);

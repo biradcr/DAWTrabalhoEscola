@@ -18,7 +18,7 @@ import org.junit.Test;
 
 /**
  *
- * @author jorge
+ * @author Ubiratan
  */
 public class TestePersistirEspecialidade {
 
@@ -32,7 +32,7 @@ public class TestePersistirEspecialidade {
 
     @Before
     public void setUp() {
-        emf = Persistence.createEntityManagerFactory("DAW_Escola");
+        emf = Persistence.createEntityManagerFactory("DAW_EscolaPU");
         em = emf.createEntityManager();
     }
     

@@ -20,7 +20,7 @@ import org.junit.Test;
 
 /**
  *
- * @author jorge
+ * @author Ubiratan
  */
 public class TestePersistirCurso {
 
@@ -34,7 +34,7 @@ public class TestePersistirCurso {
 
     @Before
     public void setUp() {
-        emf = Persistence.createEntityManagerFactory("DAW_Escola");
+        emf = Persistence.createEntityManagerFactory("DAW_EscolaPU");
         em = emf.createEntityManager();
     }
     
@@ -48,8 +48,8 @@ public class TestePersistirCurso {
         boolean exception = false;
         try {
             Curso c = new Curso();
-            c.setNome("Matemática");
-            c.setSigla("MA");
+            c.setNome("Religião");
+            c.setSigla("RE");
             c.setDescricao("Matéria voltada para iniciantes");
             c.setAtivo(true);
             c.setInicioAtividades(new GregorianCalendar(2016, 04, 10));            
