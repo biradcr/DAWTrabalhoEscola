@@ -35,7 +35,6 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 @Entity
 @Table(name = "curso")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Curso implements Serializable{
     @Id
     @SequenceGenerator(name = "seq_curso", sequenceName = "seq_curso_id", allocationSize = 1)
