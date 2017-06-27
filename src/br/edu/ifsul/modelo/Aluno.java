@@ -6,15 +6,21 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,7 +36,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "aluno")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Aluno implements Serializable{
+public class Aluno implements Serializable {
+
     @Id
     @SequenceGenerator(name = "seq_aluno", sequenceName = "seq_aluno_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_aluno", strategy = GenerationType.SEQUENCE)
@@ -48,9 +55,20 @@ public class Aluno implements Serializable{
     @Temporal(TemporalType.DATE)
     @Column(name = "nascimento", nullable = false)
     private Calendar nascimento;
-    
-    public Aluno(){
-        
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "aluno_disc",
+            joinColumns = @JoinColumn(name = "aluno",
+                    referencedColumnName = "id",
+                    nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "disciplina",
+                    referencedColumnName = "id",
+                    nullable = false)
+    )
+
+    private List<Disciplina> disciplinas = new ArrayList<>();
+
+    public Aluno() {
+
     }
 
     public Integer getId() {
@@ -85,10 +103,20 @@ public class Aluno implements Serializable{
         this.nascimento = nascimento;
     }
 
+    
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -110,6 +138,4 @@ public class Aluno implements Serializable{
         return true;
     }
 
-    
-    
 }

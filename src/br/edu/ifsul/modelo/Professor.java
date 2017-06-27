@@ -6,14 +6,14 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -33,6 +33,7 @@ public class Professor extends Aluno implements Serializable{
     
     @ManyToOne
     @JoinColumn(name = "especialidade", referencedColumnName = "id", nullable = false)
+    @ForeignKey(name = "fk_especialidade")
     private Especialidade especialidade;
     
     public Professor(){
@@ -61,6 +62,31 @@ public class Professor extends Aluno implements Serializable{
 
     public void setEspecialidade(Especialidade especialidade) {
         this.especialidade = especialidade;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.titulacao);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Professor other = (Professor) obj;
+        if (!Objects.equals(this.titulacao, other.titulacao)) {
+            return false;
+        }
+        return true;
     }
     
     

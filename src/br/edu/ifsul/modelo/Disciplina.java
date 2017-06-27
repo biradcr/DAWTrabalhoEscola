@@ -7,7 +7,6 @@ package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -20,13 +19,14 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -35,7 +35,6 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 @Entity
 @Table(name = "disciplina")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Disciplina implements Serializable{
     @Id
     @SequenceGenerator(name = "seq_disciplina", sequenceName = "seq_disciplina_id", allocationSize = 1)
@@ -54,15 +53,28 @@ public class Disciplina implements Serializable{
     private String conhecimentosMinimos;
     @ManyToOne
     @JoinColumn(name = "curso", referencedColumnName = "id", nullable = false)
+    @ForeignKey(name = "fk_curso")
     private Curso curso;
-    @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL,
-            orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Nota> nota = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "aluno_disciplina", 
+            joinColumns = @JoinColumn(
+                    name = "disciplina", 
+                    referencedColumnName = "id", 
+                    nullable = false),
+            inverseJoinColumns = @JoinColumn(
+                    name = "aluno", 
+                    referencedColumnName = "id", 
+                    nullable = false)
+    )
+    private List<Aluno> listAluno = new ArrayList<>();
+     @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY)   
+    private List<Nota> listNota = new ArrayList<>();    
     
     
-    public Disciplina(){
-        
-    }
+  
 
     public Integer getId() {
         return id;
@@ -136,16 +148,30 @@ public class Disciplina implements Serializable{
         }
         return true;
     }
-
-    public List<Nota> getNota() {
-        return nota;
-    }
-
-    public void setNota(List<Nota> nota) {
-        this.nota = nota;
-    }
-
-   
     
+    public List<Aluno> getAlunos() {
+        return listAluno;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.listAluno = alunos;
+    }
+    
+    public List<Nota> getListNota() {
+        return listNota;
+    }
+
+    public void setListNota(List<Nota> listNota) {
+        this.listNota = listNota;
+    }
+    
+    public void adicionarNota(Nota obj){
+        obj.setDisciplina(this);
+        this.getListNota().add(obj);
+    }
+    
+    public void removerDisciplina(int index){
+        this.getListNota().remove(index);
+    }   
     
 }

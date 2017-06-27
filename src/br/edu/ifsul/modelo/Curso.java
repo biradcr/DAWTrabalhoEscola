@@ -17,8 +17,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -27,6 +25,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -50,7 +49,7 @@ public class Curso implements Serializable{
     private String sigla;
     @Column(name = "descricao", columnDefinition = "text")
     private String descricao;
-    @NotNull(message = "O ativo deve ser informado")
+    @NotNull(message = "O Status deve ser informado")
     @Column(name = "ativo", nullable = false)
     private Boolean ativo;
     @NotNull(message = "O inicio das atividades deve ser informado")
@@ -60,10 +59,11 @@ public class Curso implements Serializable{
     @NotNull(message = "A cidade não pode ser nulo")
     @ManyToOne
     @JoinColumn(name = "instituicao", referencedColumnName = "id", nullable = false)
+    @ForeignKey(name = "fk_instituicao")
     private Instituicao instituicao;
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL,
             orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Disciplina> disciplina = new ArrayList<>();
+    private List<Disciplina> listDisciplina = new ArrayList<>();
     
     public Curso(){
         
@@ -150,13 +150,22 @@ public class Curso implements Serializable{
         return true;
     }
 
-    public List<Disciplina> getDisciplina() {
-        return disciplina;
+    public List<Disciplina> getListDisciplina() {
+        return listDisciplina;
     }
 
-    public void setDisciplina(List<Disciplina> disciplina) {
-        this.disciplina = disciplina;
+    public void setListDisciplina(List<Disciplina> listDisciplina) {
+        this.listDisciplina = listDisciplina;
     }
     
+    public void addDisciplina(Disciplina obj){
+        obj.setCurso(this);
+        this.listDisciplina.add(obj);
+    }
     
+    public void removerDisciplina(int index){
+        this.listDisciplina.remove(index);
+    }    
+    
+ 
 }
